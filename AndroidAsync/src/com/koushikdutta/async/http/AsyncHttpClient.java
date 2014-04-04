@@ -265,12 +265,22 @@ public class AsyncHttpClient {
                             newReq.LOGTAG = request.LOGTAG;
                             newReq.proxyHost = request.proxyHost;
                             newReq.proxyPort = request.proxyPort;
+                            
+                            //preserve UserAgent
                             String userAgent = request.getHeaders().getHeaders().get("User-Agent");
                             if (!TextUtils.isEmpty(userAgent))
                                 newReq.getHeaders().getHeaders().set("User-Agent", userAgent);
+
+                            //preserve Range
                             String rangeHeader = request.getHeaders().getHeaders().get("Range");
                             if(!TextUtils.isEmpty(rangeHeader))
                                 newReq.getHeaders().getHeaders().set("Range", rangeHeader);
+
+                            //preserve If-None-Match
+                            String ifNoneMatch = request.getHeaders().getHeaders().get("If-None-Match");
+                            if(!TextUtils.isEmpty(ifNoneMatch))
+                                newReq.getHeaders().getHeaders().set("If-None-Match", ifNoneMatch);
+
                             request.logi("Redirecting");
                             newReq.logi("Redirected");
                             execute(newReq, redirectCount + 1, cancel, callback);
