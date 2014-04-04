@@ -268,6 +268,9 @@ public class AsyncHttpClient {
                             String userAgent = request.getHeaders().getHeaders().get("User-Agent");
                             if (!TextUtils.isEmpty(userAgent))
                                 newReq.getHeaders().getHeaders().set("User-Agent", userAgent);
+                            String rangeHeader = request.getHeaders().getHeaders().get("Range");
+                            if(!TextUtils.isEmpty(rangeHeader))
+                                newReq.getHeaders().getHeaders().set("Range", rangeHeader);
                             request.logi("Redirecting");
                             newReq.logi("Redirected");
                             execute(newReq, redirectCount + 1, cancel, callback);
